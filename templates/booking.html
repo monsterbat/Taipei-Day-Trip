@@ -1,8 +1,9 @@
 {% extends 'index.html' %}
 
 {% block title %}
+<script src="../static/js/key.js" defer></script>
 <script src="../static/js/booking.js" defer></script> 
-<script src="../static/js/tappay.js" defer></script> 
+<script src="../static/js/tappay.js" defer></script>  
 <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
 <link rel="stylesheet", type="text/css", href="../static/css/tpdt.css" />
 <link rel="stylesheet", type="text/css", href="../static/css/booking.css" />
@@ -111,7 +112,16 @@
             <div class="pay" id="pay">確認訂購並付款</div>
         </div>
     </section>
-    
+
+
+    <!-- 1-9 -->
+    <div class="processFilter" id="processFilter"></div>
+    <div class="processInf" id="processInf">        
+        <div class="processTitle" id="processTitle">
+            處理中  請稍候
+        </div>        
+        <img src="../static/image/ryou_eat_grass.gif">        
+    </div>
     
 </main>
 {% endblock %}

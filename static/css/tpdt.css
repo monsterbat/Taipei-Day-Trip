@@ -83,10 +83,12 @@ header nav .topRightOptions .signInButton{
     color: #666666;
     cursor: pointer;
 }
+header nav .topRightOptions .memberCenterButton:hover,
 header nav .topRightOptions .signOutButton:hover{
     font-size: 17px;
 }
-header nav .topRightOptions .signOutButton{
+header nav .topRightOptions .signOutButton,
+header nav .topRightOptions .memberCenterButton{
     display: none;
     margin: 10px;
     font-family: "Noto Sans TC";
@@ -95,6 +97,9 @@ header nav .topRightOptions .signOutButton{
     line-height: 13.3px;
     color: #666666;
     cursor: pointer;
+}
+header nav .topRightOptions .signOutButton{
+    color:#ad3838
 }
 /* ***********************************************/
 /* ******************* slogan ********************/

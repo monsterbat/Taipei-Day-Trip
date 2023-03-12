@@ -35,7 +35,7 @@ while count<data_length:
     """
     value_input_idfind=(data_name,)
     data_idfind=query_data(sql_command_idfind,value_input_idfind)
-    data_idfind=data_idfind[0][0]
+    data_idfind=data_idfind[0]["id"]
 
     # INSERT images to SQL attraction_image table
     data_muti_images=data[count]["file"]

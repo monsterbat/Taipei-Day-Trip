@@ -1,5 +1,5 @@
-TPDirect.setupSDK(126863, 'app_me7IhP6OtFlPFLLeNmXxd3lusEmHaA8rit01fAC1mEDDPpjBFk9Kf5I94hk1', 'sandbox')
-
+TPDirect.setupSDK(126863, "app_me7IhP6OtFlPFLLeNmXxd3lusEmHaA8rit01fAC1mEDDPpjBFk9Kf5I94hk1", 'sandbox')
+// TPDirect.setupSDK(`${appId}`, `${appKey}`, 'sandbox')
 // Display ccv field
 let fields = {
     number: {
@@ -88,6 +88,10 @@ let payButton = document.getElementById("payBlock")
 payButton.addEventListener("click",onSubmit)
 
 function onSubmit(event) {
+    let processFilter = document.getElementById("processFilter")
+    let processInf = document.getElementById("processInf")
+    processFilter.style.display = "flex"
+    processInf.style.display = "flex"
     event.preventDefault()
 
     // 取得 TapPay Fields 的 status

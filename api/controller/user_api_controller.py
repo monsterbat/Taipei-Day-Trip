@@ -11,7 +11,7 @@ user_api_controller = Blueprint(
 )
 
 jwt_key = "key"
-@user_api_controller.route("/api/user/auth", methods=["PUT","GET","DELETE"])
+@user_api_controller.route("/api/user/auth", methods=["PUT","GET","DELETE","PATCH"])
 def auth():
     if request.method == "GET":
         try:
@@ -47,7 +47,17 @@ def auth():
                 "message": "伺服器內部錯誤"
             }
             return errorr_message,500
+    if request.method == "PATCH":
+        try:
+            verify_msg = user_api_module.get_auth_patch()
+            return verify_msg,200
 
+        except:
+            errorr_message = {
+                "error": True,
+                "message": "伺服器內部錯誤"
+            }
+            return errorr_message,500
 @user_api_controller.route("/api/user", methods=["POST"])
 def user():
     try:        

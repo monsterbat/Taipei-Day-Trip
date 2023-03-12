@@ -56,3 +56,24 @@ def orderNumber(orderNumber):
         "message": "伺服器內部錯誤"
         })
         return errorr_message,500
+
+@orders_api_controller.route("/api/orders/history/<user_id>",methods=["GET"])
+def orderHistory(user_id):
+    token = request.cookies.get('token')
+    
+    # check token with login or not
+    if token == None:
+        no_login_msg = jsonify({
+            "error":True,
+            "message":"使用者未登入"
+        })
+        return no_login_msg,403   
+    try:
+        orderHistory = orders_api_module.get_orderHistory_get(user_id)
+        return orderHistory,200
+    except:
+        errorr_message = jsonify({
+        "error": True,
+        "message": "伺服器內部錯誤"
+        })
+        return errorr_message,500

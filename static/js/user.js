@@ -1,5 +1,6 @@
 let signInButton = document.getElementById("signInButton")
 let signOutButton = document.getElementById("signOutButton")
+let memberCenterButton = document.getElementById("memberCenterButton")
 let signInWindow = document.getElementById("signIn")
 let signUpWindow = document.getElementById("signUp")
 let signFilter = document.getElementById("signFilter")
@@ -18,11 +19,15 @@ async function userStatus(){
     }).then(function(data){
         if(data.data == null || data.error == true){
             signInButton.style.display = "block"
+            memberCenterButton.style.display = "none"            
             // userStatusShow = "no"
         }
         else{
-            signOutButton.style.display = "block"
-            // userStatusShow = "yes"
+            memberCenterButton.style.display = "block"
+            if (window.location.pathname == `/memberCenter`){
+                signOutButton.style.display = "block"
+                memberCenterButton.style.display = "none"
+            }
         }
     })
 }
@@ -39,10 +44,12 @@ async function signOut(){
         return response.json();
     }).then(function(data){
         signInButton.style.display = "block"
-        signOutButton.style.display = "none"
-        location.reload();
+        memberCenterButton.style.display = "none"
+        // signInButton.style.display = "none"
+        location.href = "/"
     })
 }
+
 
 async function signIn(){
     let signInEmail = document.getElementById("signInEmail").value;
@@ -142,6 +149,22 @@ async function arrangeSchedule(){
         }
         else{
             window.location.href = "/booking"
+        }
+    })
+}
+
+async function memberCenter(){
+    let url = `/api/user/auth`
+    await fetch(url,{
+        method:"GET",
+    }).then(function(response){
+        return response.json();
+    }).then(function(data){
+        if(data.data == null || data.error == true){
+            signInBlock();
+        }
+        else{
+            window.location.href = "/memberCenter"
         }
     })
 }

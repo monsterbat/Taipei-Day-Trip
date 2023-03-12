@@ -3,15 +3,17 @@ sys.path.append('api/function')
 import booking_api_module
 from MySQL_con import *
 from flask import *
-import jwt
-jwt_key = "key"
+# .env 
+from dotenv import load_dotenv
+import os
+load_dotenv()
+tappay_partner_key = os.getenv("tappay_partner_key")
 
 import datetime
-current_time_code = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-
 import requests
 
 def get_orders_post(user_id):
+    current_time_code = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     # Insert data
     orders_data = request.get_json()
     prime = orders_data["prime"]
@@ -20,15 +22,15 @@ def get_orders_post(user_id):
     attraction_name = orders_data["order"]["trip"]["attraction"]["name"]
     attraction_address = orders_data["order"]["trip"]["attraction"]["address"]
     attraction_image = orders_data["order"]["trip"]["attraction"]["image"]
-    date = orders_data["order"]["trip"]["date"]
-    time = orders_data["order"]["trip"]["time"]
+    order_date = orders_data["order"]["trip"]["date"]
+    order_time = orders_data["order"]["trip"]["time"]
     contact_name = orders_data["order"]["contact"]["name"]
     contact_email = orders_data["order"]["contact"]["email"]
     contact_phone = orders_data["order"]["contact"]["phone"]
 
     unite_id_len = str(user_id).rjust(7,"0")
     order_number = str(current_time_code+unite_id_len)
-    partner_key = "partner_eUauRMVnPUrBTAZqhOg9xuOfhkgrJRSnvt7Ulm4qXu8ZK7Y00XKcK5bt"
+    partner_key = tappay_partner_key
 
     url = "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
     header= {
@@ -56,10 +58,10 @@ def get_orders_post(user_id):
         pay_ststus = "已付款"
         pay_msg = "付款成功"    
         sql_command = """
-        INSERT INTO orders (user_id, order_number, pay_status,contact_phone,contact_name,contact_email)
-        VALUES (%s,%s,%s,%s,%s,%s);
+        INSERT INTO orders (user_id, order_number, pay_status,contact_phone,contact_name,contact_email,attraction_id,attraction_name,attraction_address,attraction_image,order_date,order_time)
+        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
         """
-        value_input = (user_id,order_number,pay_ststus,contact_phone,contact_name,contact_email)
+        value_input = (user_id,order_number,pay_ststus,contact_phone,contact_name,contact_email,attraction_id,attraction_name,attraction_address,attraction_image,order_date,order_time)
         insert_or_update_data(sql_command,value_input)
 
         respon_msg = jsonify({
@@ -159,3 +161,14 @@ def get_orderNummber_get(orderNumber):
     booking_api_module.delete_booking_inf(user_id)
 
     return data
+
+def get_orderHistory_get(user_id):
+    sql_command="""
+    SELECT user_id, order_number, pay_status,contact_phone,contact_name,contact_email,attraction_id,attraction_name,attraction_address,attraction_image,order_date,order_time
+    FROM orders 
+    WHERE user_id=%s;
+    """
+    value_input = (user_id,)
+    orders_info = query_data(sql_command,value_input)
+    return orders_info
+

@@ -41,6 +41,9 @@ def booking():
 @app.route("/thankyou")
 def thankyou():
 	return render_template("thankyou.html")
+@app.route("/memberCenter")
+def memberCenter():
+	return render_template("memberCenter.html")
 
 app.debug = True
 app.run(host = "0.0.0.0",port=3000)

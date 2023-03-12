@@ -5,7 +5,10 @@ from MySQL_con import *
 from flask import *
 import jwt
 
-jwt_key = "key"
+from dotenv import load_dotenv
+import os
+load_dotenv()
+jwt_key = os.getenv("jwt_key")
 
 def verify_booking():
     # Get token
