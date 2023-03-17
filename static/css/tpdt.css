@@ -14,7 +14,7 @@ body{
 
 header{
     display: flex;
-    position: sticky; /* freeze */
+    /* position: sticky;  */
     margin:0px;
     width: 100%;
     height: 54px;

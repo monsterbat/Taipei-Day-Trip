@@ -32,6 +32,7 @@ def get_auth_get():
         """
         value_input = (user_email,)
         user_info = query_data(sql_command,value_input)
+        print(user_info)
         # Judge token right or wrong
         if user_info == []:
             verify_msg = jsonify({

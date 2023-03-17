@@ -3,7 +3,7 @@ import sys
 sys.path.append('api/function')
 from MySQL_con import *
 from flask import *
-
+ 
 def get_attractions(page, keyword=None):
 	one_page_quanity=12
 	data_start=int(page*one_page_quanity)
@@ -83,6 +83,7 @@ def get_attractions(page, keyword=None):
 		next_page=None
 
 	# Combine
+	print(next_page)
 	data_main=jsonify({
 		"nextPage":next_page,
 		"data":data_result
